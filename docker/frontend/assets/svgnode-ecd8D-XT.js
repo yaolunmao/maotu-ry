@@ -1,0 +1,1 @@
+import{T as o}from"./index-_GLIFr1R.js";function n(e){return o({url:"/webtopo/svgnode/list",method:"get",params:e})}function d(e){return o({url:"/webtopo/svgnode",method:"post",data:e})}function r(e){return o({url:"/webtopo/svgnode/unbind",method:"delete",data:e})}export{d as a,n as l,r as u};

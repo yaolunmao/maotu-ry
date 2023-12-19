@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.webtopo.mapper.WebtopoDeviceSvgnodeMapper">
+    
+    <resultMap type="WebtopoDeviceSvgnode" id="WebtopoDeviceSvgnodeResult">
+        <result property="projectId"    column="project_id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="svgNodeId"    column="svg_node_id"    />
+        <result property="svgNodeProp"    column="svg_node_prop"    />
+        <result property="deviceProp"    column="device_prop"    />
+    </resultMap>
+
+    <sql id="selectWebtopoDeviceSvgnodeVo">
+        select project_id, device_id, svg_node_id, svg_node_prop, device_prop from webtopo_device_svgnode
+    </sql>
+
+    <select id="selectWebtopoDeviceSvgnodeList" parameterType="WebtopoDeviceSvgnode" resultMap="WebtopoDeviceSvgnodeResult">
+        <include refid="selectWebtopoDeviceSvgnodeVo"/>
+        <where>  
+            <if test="projectId != null "> and project_id = #{projectId}</if>
+            <if test="svgNodeId != null "> and svg_node_id = #{svgNodeId}</if>
+        </where>
+    </select>
+    
+    <select id="selectWebtopoDeviceSvgnodeByProjectId" parameterType="Long" resultMap="WebtopoDeviceSvgnodeResult">
+        <include refid="selectWebtopoDeviceSvgnodeVo"/>
+        where project_id = #{projectId}
+    </select>
+        
+    <insert id="insertWebtopoDeviceSvgnode" parameterType="WebtopoDeviceSvgnode">
+        insert into webtopo_device_svgnode
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">project_id,</if>
+            <if test="deviceId != null">device_id,</if>
+            <if test="svgNodeId != null">svg_node_id,</if>
+            <if test="svgNodeProp != null">svg_node_prop,</if>
+            <if test="deviceProp != null">device_prop,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">#{projectId},</if>
+            <if test="deviceId != null">#{deviceId},</if>
+            <if test="svgNodeId != null">#{svgNodeId},</if>
+            <if test="svgNodeProp != null">#{svgNodeProp},</if>
+            <if test="deviceProp != null">#{deviceProp},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWebtopoDeviceSvgnode" parameterType="WebtopoDeviceSvgnode">
+        update webtopo_device_svgnode
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceId != null">device_id = #{deviceId},</if>
+            <if test="svgNodeId != null">svg_node_id = #{svgNodeId},</if>
+            <if test="svgNodeProp != null">svg_node_prop = #{svgNodeProp},</if>
+            <if test="deviceProp != null">device_prop = #{deviceProp},</if>
+        </trim>
+        where project_id = #{projectId}
+    </update>
+
+    <delete id="deleteWebtopoDeviceSvgnodeByProjectId" parameterType="Long">
+        delete from webtopo_device_svgnode where project_id = #{projectId}
+    </delete>
+
+    <delete id="deleteWebtopoDeviceSvgnodeByProjectIds" parameterType="String">
+        delete from webtopo_device_svgnode where project_id in 
+        <foreach item="projectId" collection="array" open="(" separator="," close=")">
+            #{projectId}
+        </foreach>
+    </delete>
+
+    <delete id="unbindWebtopoDeviceSvgnode" parameterType="WebtopoDeviceSvgnode">
+        delete from webtopo_device_svgnode
+        where project_id = #{projectId}
+          AND device_id = #{deviceId}
+          AND svg_node_id = #{svgNodeId}
+          AND svg_node_prop = #{svgNodeProp}
+    </delete>
+
+    <select id="selectWebtopoDeviceSvgnodeByPropList" parameterType="WebtopoWebSocketDevice" resultMap="WebtopoDeviceSvgnodeResult">
+        <include refid="selectWebtopoDeviceSvgnodeVo"/>
+        where project_id = #{projectId}
+          AND device_id = #{deviceId}
+          AND device_prop in
+        <foreach collection="deviceProp" item="devicePropItem" open="(" separator="," close=")">
+            #{devicePropItem}
+        </foreach>
+    </select>
+</mapper>

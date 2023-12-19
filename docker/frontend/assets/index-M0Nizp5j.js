@@ -1,0 +1,1 @@
+import{_ as o,f as c,o as n,c as s,n as t,h as a}from"./index-_GLIFr1R.js";const r={};function _(i,l){const e=c("svg-icon");return n(),s("div",null,[t(" 表单构建 "),a(e,{"icon-class":"build"})])}const f=o(r,[["render",_]]);export{f as default};

@@ -1,0 +1,4 @@
+Application Version: ${ruoyi.version}
+Spring Boot Version: ${spring-boot.version}
+//             项目启动中              //
+////////////////////////////////////////////////////////////////////

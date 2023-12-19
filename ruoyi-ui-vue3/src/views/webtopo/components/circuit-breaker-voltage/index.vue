@@ -1,0 +1,29 @@
+<template>
+  <svg width="524" height="747" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <g>
+      <path
+        d="m260.624,47.66667a13.76,13.76 0 0 1 13.78133,13.76l0,79.12533a13.78133,13.78133 0 0 1 -13.78133,13.76a13.76,13.76 0 0 1 -13.76,-13.76l0,-79.104a13.76,13.76 0 0 1 13.76,-13.80267l0,0.02134z"
+        :fill="props.state?'red':'green'" id="svg_1" />
+      <path
+        d="m246.52267,495.66667m13.80266,0l-0.02133,0q13.80267,0 13.80267,13.80266l0,79.06134q0,13.80266 -13.80267,13.80266l0.02133,0q-13.80266,0 -13.80266,-13.80266l0,-79.06134q0,-13.80266 13.80266,-13.80266z"
+        :fill="props.state?'red':'green'" id="svg_2" />
+      <path
+        d="m355.38667,154.39733l-0.23467,341.504l-189.632,-0.128l0.256,-341.504l189.65333,0.128m13.76,-27.54133l-217.152,-0.128a13.76,13.76 0 0 0 -13.76,13.76l-0.256,369.06667a13.76,13.76 0 0 0 13.78134,13.76l217.216,0.14933a13.76,13.76 0 0 0 13.76,-13.76l0.256,-369.06667a13.76,13.76 0 0 0 -13.78134,-13.76l-0.064,-0.02133z"
+        :fill="props.state?'red':'green'" id="svg_3" />
+      <text x="10" y="701" font-size="90" :fill="props.state?'red':'green'" id="svg_4">电压值:{{ props.voltage }}v</text>
+    </g>
+  </svg>
+</template>
+<script setup lang="ts">
+import { ElPopover } from 'element-plus';
+const props = defineProps({
+  state: {
+        type: Boolean,
+        default: false
+    },
+  voltage: {
+    type: Number,
+    default: 0
+  }
+});
+</script>

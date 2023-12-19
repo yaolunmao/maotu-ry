@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.webtopo.mapper.WebtopoProjectMapper">
+    
+    <resultMap type="WebtopoProject" id="WebtopoProjectResult">
+        <result property="projectId"    column="project_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="thumbnail"    column="thumbnail"    />
+        <result property="dataModel"    column="data_model"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <resultMap id="WebtopoProjectWebtopoProjectDeviceResult" type="WebtopoProject" extends="WebtopoProjectResult">
+        <collection property="deviceList" notNullColumn="sub_project_id" javaType="java.util.List" resultMap="WebtopoProjectDeviceResult" />
+    </resultMap>
+
+    <resultMap type="WebtopoProjectDevice" id="WebtopoProjectDeviceResult">
+        <result property="projectId"    column="sub_project_id"    />
+        <result property="deviceId"    column="sub_device_id"    />
+        <result property="deviceName"    column="sub_device_name"    />
+        <collection property="deviceDictList" javaType="java.util.List" resultMap="WebtopoProjectDeviceDictResult" />
+    </resultMap>
+
+    <resultMap type="WebtopoProjectDeviceDict" id="WebtopoProjectDeviceDictResult">
+        <result property="label"    column="sub_label"    />
+        <result property="value"    column="sub_value"    />
+    </resultMap>
+
+    <sql id="selectWebtopoProjectVo">
+        select project_id, project_name, thumbnail, data_model, create_by, create_time, update_by, update_time, remark from webtopo_project
+    </sql>
+
+    <select id="selectWebtopoProjectList" parameterType="WebtopoProject" resultMap="WebtopoProjectResult">
+        <include refid="selectWebtopoProjectVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="thumbnail != null  and thumbnail != ''"> and thumbnail = #{thumbnail}</if>
+            <if test="dataModel != null  and dataModel != ''"> and data_model = #{dataModel}</if>
+        </where>
+    </select>
+    
+    <select id="selectWebtopoProjectByProjectId" parameterType="Long" resultMap="WebtopoProjectWebtopoProjectDeviceResult">
+        select a.project_id, a.project_name, a.thumbnail, a.data_model, a.create_by, a.create_time, a.update_by, a.update_time, a.remark,
+ b.project_id as sub_project_id, b.device_id as sub_device_id,
+               c.`name` AS sub_device_name,
+               e.dict_label AS sub_label,
+               e.dict_value AS sub_value
+        from webtopo_project a
+        left join webtopo_project_device b on b.project_id = a.project_id
+        LEFT JOIN webtopo_device c ON c.device_id = b.device_id
+        LEFT JOIN sys_dict_type d ON d.dict_id = c.type
+        LEFT JOIN sys_dict_data e ON e.dict_type = d.dict_type
+        where a.project_id = #{projectId}
+    </select>
+        
+    <insert id="insertWebtopoProject" parameterType="WebtopoProject" useGeneratedKeys="true" keyProperty="projectId">
+        insert into webtopo_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">project_name,</if>
+            <if test="thumbnail != null">thumbnail,</if>
+            <if test="dataModel != null">data_model,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">#{projectName},</if>
+            <if test="thumbnail != null">#{thumbnail},</if>
+            <if test="dataModel != null">#{dataModel},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWebtopoProject" parameterType="WebtopoProject">
+        update webtopo_project
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="thumbnail != null">thumbnail = #{thumbnail},</if>
+            <if test="dataModel != null">data_model = #{dataModel},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where project_id = #{projectId}
+    </update>
+
+    <delete id="deleteWebtopoProjectByProjectId" parameterType="Long">
+        delete from webtopo_project where project_id = #{projectId}
+    </delete>
+
+    <delete id="deleteWebtopoProjectByProjectIds" parameterType="String">
+        delete from webtopo_project where project_id in 
+        <foreach item="projectId" collection="array" open="(" separator="," close=")">
+            #{projectId}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteWebtopoProjectDeviceByProjectIds" parameterType="String">
+        delete from webtopo_project_device where project_id in 
+        <foreach item="projectId" collection="array" open="(" separator="," close=")">
+            #{projectId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteWebtopoProjectDeviceByProjectId" parameterType="Long">
+        delete from webtopo_project_device where project_id = #{projectId}
+    </delete>
+
+    <insert id="batchWebtopoProjectDevice">
+        insert into webtopo_project_device( project_id, device_id) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.projectId}, #{item.deviceId})
+        </foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.webtopo.mapper.WebtopoDeviceMapper">
+    
+    <resultMap type="WebtopoDevice" id="WebtopoDeviceResult">
+        <result property="deviceId"    column="device_id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="state"    column="state"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectWebtopoDeviceVo">
+        select device_id, name, type, create_by, create_time, update_by, update_time, state, remark from webtopo_device
+    </sql>
+
+    <select id="selectWebtopoDeviceList" parameterType="WebtopoDevice" resultMap="WebtopoDeviceResult">
+        <include refid="selectWebtopoDeviceVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+        </where>
+    </select>
+
+    <select id="selectWebtopoDeviceById" parameterType="Long" resultMap="WebtopoDeviceResult">
+        <include refid="selectWebtopoDeviceVo"/>
+        where device_id = #{deviceId}
+    </select>
+        
+    <insert id="insertWebtopoDevice" parameterType="WebtopoDevice" useGeneratedKeys="true" keyProperty="deviceId">
+        insert into webtopo_device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="type != null">type,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="state != null">state,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="state != null">#{state},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWebtopoDevice" parameterType="WebtopoDevice">
+        update webtopo_device
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where device_id = #{deviceId}
+    </update>
+
+    <delete id="deleteWebtopoDeviceById" parameterType="Long">
+        delete from webtopo_device where device_id = #{deviceId}
+    </delete>
+
+    <delete id="deleteWebtopoDeviceByIds" parameterType="String">
+        delete from webtopo_device where device_id in
+        <foreach item="deviceId" collection="array" open="(" separator="," close=")">
+            #{deviceId}
+        </foreach>
+    </delete>
+</mapper>

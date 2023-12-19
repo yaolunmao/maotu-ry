@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0.24
+    container_name: webtopo-pro-mysql-dev
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - ./webtopo-demo.sql:/docker-entrypoint-initdb.d/webtopo-demo.sql
+      - ./mysql-data:/var/lib/mysql
+    ports:
+      - 3366:3306
+  redis:
+    image: redis:6.2.6
+    container_name: webtopo-pro-redis-dev
+    ports:
+      - 6379:6379
