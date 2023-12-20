@@ -58,7 +58,7 @@ for (const key in modulesFiles) {
       id: name,
       title: name,
       type: 'svg',
-      thumbnail: '/svgs/电阻.svg',
+      thumbnail: key.replace('/public', ''),
       svg: modulesFiles[key],
       props: {
         stroke: {
@@ -74,7 +74,7 @@ for (const key in modulesFiles) {
       id: name,
       title: name,
       type: 'svg',
-      thumbnail: key,
+      thumbnail: key.replace('/public', ''),
       svg: modulesFiles[key],
       props: {
         fill: {

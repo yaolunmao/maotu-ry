@@ -1,7 +1,7 @@
 {
-  "name": "webtopo-pro",
+  "name": "maotu-ry",
   "version": "3.8.5",
-  "description": "webtopo-pro",
+  "description": "maotu-ry",
   "author": "咬轮猫",
   "license": "MIT",
   "scripts": {
@@ -21,7 +21,7 @@
     "fuse.js": "6.6.2",
     "js-cookie": "3.0.1",
     "jsencrypt": "3.3.1",
-    "maotu": "0.2.3-rc.1",
+    "maotu": "0.2.4-rc.2",
     "nprogress": "0.2.0",
     "pinia": "2.0.22",
     "vue": "3.3.4",

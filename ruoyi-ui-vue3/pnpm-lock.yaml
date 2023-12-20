@@ -33,8 +33,8 @@ dependencies:
     specifier: 3.3.1
     version: 3.3.1
   maotu:
-    specifier: 0.2.3-rc.1
-    version: 0.2.3-rc.1
+    specifier: 0.2.4-rc.2
+    version: 0.2.4-rc.2
   nprogress:
     specifier: 0.2.0
     version: 0.2.0
@@ -1739,8 +1739,8 @@ packages:
     dev: false
     optional: true
 
-  /maotu@0.2.3-rc.1:
-    resolution: {integrity: sha512-o9vQO1tD42FSyEvDJXfiExwEKhg2x1o3L1ei1YVPiInakUWMW9XDzfNEyhgqSc1Nl8u/TMf531NhqB0trtc2ow==}
+  /maotu@0.2.4-rc.2:
+    resolution: {integrity: sha512-kDHrizxcBeYutSMnbMyflRkrLjEnpM7GdWz4kC/CujKxdTZHGPRclSXNu8Uz6eunw1GtKd5F5Wgg6cBvoTuKTw==}
     dependencies:
       '@vueuse/core': 10.7.0(vue@3.3.4)
       ace-builds: 1.32.2
