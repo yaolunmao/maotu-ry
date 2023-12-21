@@ -7,7 +7,7 @@ export default function createAutoImport() {
             'vue-router',
             'pinia'
         ],
-        exclude: [/node_modules/,/vue-webtopo-svgeditor/,/lib/,/maotu/],
+        exclude: [/node_modules/,/vue-webtopo-svgeditor/,/lib/],
         dts: false
     })
 }

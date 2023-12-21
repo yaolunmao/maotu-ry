@@ -6,7 +6,7 @@
 import useSettingsStore from '@/store/modules/settings'
 import { handleThemeStyle } from '@/utils/theme'
 import { leftAsideStore } from "maotu";
-const modulesFiles = import.meta.glob("/public/svgs/test/**.svg", { eager: true, as: 'raw' })
+const modulesFiles = import.meta.glob("./assets/svgs/test/**.svg", { eager: true, as: 'raw' })
 const register_config = [{
   id: 'ws-state',
   title: 'websocket连接状态',
@@ -58,7 +58,7 @@ for (const key in modulesFiles) {
       id: name,
       title: name,
       type: 'svg',
-      thumbnail: key.replace('/public', ''),
+      thumbnail: 'data:image/svg+xml;utf8,' + encodeURIComponent(modulesFiles[key]),
       svg: modulesFiles[key],
       props: {
         stroke: {
@@ -74,7 +74,7 @@ for (const key in modulesFiles) {
       id: name,
       title: name,
       type: 'svg',
-      thumbnail: key.replace('/public', ''),
+      thumbnail: 'data:image/svg+xml;utf8,' + encodeURIComponent(modulesFiles[key]),
       svg: modulesFiles[key],
       props: {
         fill: {
