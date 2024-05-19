@@ -21,7 +21,7 @@
     "fuse.js": "6.6.2",
     "js-cookie": "3.0.1",
     "jsencrypt": "3.3.1",
-    "maotu": "0.2.4-rc.2",
+    "maotu": "0.3.4",
     "nprogress": "0.2.0",
     "pinia": "2.0.22",
     "vue": "3.3.4",
